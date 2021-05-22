@@ -4,10 +4,18 @@
   box-sizing: border-box;
 }
 
+html{
+  height: 100%;
+  width: 100%;
+}
 body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(130deg, rgb(97, 236, 97),rgb(228, 255, 228));
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 main {
@@ -34,7 +42,7 @@ form {
 .main-header {
   width: 100%;
   height: 3.5rem;
-  background-color: #00695c;
+  background-color: rgb(100, 150, 100);
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
@@ -66,7 +74,7 @@ form {
   background: transparent;
   border: none;
   text-decoration: none;
-  color: white;
+  color: rgb(18, 53, 18);
   cursor: pointer;
 }
 
@@ -75,17 +83,17 @@ form {
 .main-header__item a.active,
 .main-header__item button:hover,
 .main-header__item button:active {
-  color: #ffeb3b;
+  color: rgb(137, 255, 68);
 }
 
 .mobile-nav {
   width: 30rem;
   height: 100vh;
-  max-width: 90%;
+  max-width: 21rem;
   position: fixed;
   left: 0;
   top: 0;
-  background: white;
+  background: rgb(100, 150, 100);
   z-index: 10;
   padding: 2rem 1rem 1rem 2rem;
   transform: translateX(-100%);
@@ -126,18 +134,18 @@ form {
 .mobile-nav__item a.active,
 .mobile-nav__item button:hover,
 .mobile-nav__item button:active {
-  background: #00695c;
-  color: white;
+  background: rgb(42, 90, 42);
+  color: rgb(100, 150, 100);
   border-radius: 3px;
 }
 
 #side-menu-toggle {
-  border: 1px solid white;
+  border: 1px solid rgb(137, 255, 68);
   font: inherit;
   padding: 0.5rem;
   display: block;
   background: transparent;
-  color: white;
+  color: rgb(137, 255, 68);
   cursor: pointer;
 }
 
@@ -147,8 +155,8 @@ form {
 
 #side-menu-toggle:active,
 #side-menu-toggle:hover {
-  color: #ffeb3b;
-  border-color: #ffeb3b;
+  color: rgb(42, 90, 42);
+  border-color: rgb(42, 90, 42);
 }
 
 .backdrop {
@@ -208,21 +216,21 @@ form {
   padding: 0.25rem 1rem;
   text-decoration: none;
   font: inherit;
-  border: 1px solid #00695c;
-  color: #00695c;
-  background: white;
+  border: 1px solid rgb(18, 53, 18);
+  color: rgb(18, 53, 18);
+  background: rgb(153, 248, 144);
   border-radius: 3px;
   cursor: pointer;
 }
 
 .btn:hover,
 .btn:active {
-  background-color: #00695c;
-  color: white;
+  background-color: rgb(18, 53, 18);
+  color: rgb(153, 248, 144);
 }
 
 .btn.danger {
-  color: red;
+  color: rgb(255, 0, 0);
   border-color: red;
 }
 
@@ -255,17 +263,17 @@ form {
 
 .pagination a {
   text-decoration: none;
-  color: #00695c;
+  color: rgb(18, 53, 18);
   padding: 0.5rem;
-  border: 1px solid #00695c;
+  border: 1px solid rgb(18, 53, 18);
   margin: 0 1rem;
 }
 
 .pagination a:hover,
 .pagination a:active,
 .pagination a.active {
-  background-color: #00695c;
-  color: white;
+  background-color: rgb(18, 53, 18);
+  color: rgb(153, 248, 144);
 }
 
 @media (min-width: 768px) {
