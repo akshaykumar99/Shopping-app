@@ -20,8 +20,9 @@ const deleteProduct = (btn) => {
 };
 
 let buttons = document.querySelectorAll("button.btn.delete");
+
 for(let  btn of buttons){
-    console.log(btn.getAttribute('id'));
+    // console.log(btn.getAttribute('id'));
     btn.addEventListener('click',()=>{
         deleteProduct(btn);
     });

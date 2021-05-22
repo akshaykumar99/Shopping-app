@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const stripe = require('stripe')(process.env.STRIPE);
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 const PDFDocument = require('pdfkit');
 
@@ -116,7 +116,7 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.redirect('/cart');
     });
 };
@@ -244,23 +244,34 @@ exports.getInvoice = (req, res, next) => {
       pdfDoc.pipe(fs.createWriteStream(invoicePath));
       pdfDoc.pipe(res);
       pdfDoc.fontSize(26).text('Invoice', {
-        underline: true
-      });
+        underline: true,
+        align: 'center',
+      }).moveDown();
 
-      pdfDoc.text('-----------------------------------------');
+      const date = new Date();
+      pdfDoc.fontSize(14)
+        .text('Order Id: ' + orderId)
+        .text('Date: ' + date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear())
+        .moveDown();
+        
+      pdfDoc.fontSize(20).text('Products')
+      
       let totalPrice = 0;
+      let curr = 1;
       order.products.forEach(prod => {
         totalPrice = totalPrice + prod.quantity * prod.product.price;
         pdfDoc.fontSize(14).text(
+          curr + ': ' + 
           prod.product.title + 
           ' - ' + 
           prod.quantity + 
           ' x ' + 
-          '$' + 
+          'Rs ' + 
           prod.product.price);
+        curr += 1;
       });
-      pdfDoc.text('..........................................')
-      pdfDoc.fontSize(20).text('Total Price: Rs ' + totalPrice);
+
+      pdfDoc.fontSize(20).moveDown().text('Total Price: Rs ' + totalPrice);
 
       pdfDoc.end();
 

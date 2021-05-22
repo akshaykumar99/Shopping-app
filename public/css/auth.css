@@ -4,3 +4,11 @@
   margin: auto;
   display: block;
 }
+
+.resetPassword {
+  width: 20rem;
+  max-width: 90%;
+  display: block;
+  padding-top: 1rem;
+  margin: auto;
+}
