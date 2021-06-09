@@ -219,9 +219,7 @@ exports.postReset = (req, res, next) => {
 				}
 				user.resetToken = token;
 				user.resetTokenExpiration = Date.now() + 3600000;
-				return user.save();
-			})
-			.then(result => {
+				user.save();
 				res.redirect('/');
 				// return transporter.sendMail({
 				// 	to: req.body.email,
@@ -252,7 +250,6 @@ exports.postReset = (req, res, next) => {
 					  console.log('Email sent: ' + info.response);
 					}
 				  });
-				return;
 			})
 			.catch(err => {
 				const error = new Error(err);
