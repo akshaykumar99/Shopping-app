@@ -4,11 +4,11 @@
   "description": "Shopping cart Application",
   "main": "app.js",
   "engines": {
-    "node":"v14.17.0"
+    "node": "v14.17.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production MONGO_USER=akshaykumar99 MONGO_PASSWORD=YSWi8VVKVl5wIUgx MONGO_DEFAULT_DATABASE=shop STRIPE_KEY=sk_test_51Ihr1zSJrJEYTf01HOpfsRZEC6iIB2dmst8zCzsoDzAxWnSO2Mvn39IwN5sazbjhDAC3kfZLZfCeckSAAAGMqwkw00Qk2JWeRj node app.js",
+    "start": "NODE_ENV=production node app.js",
     "start-server": "node app.js",
     "start:dev": "nodemon app.js"
   },
@@ -26,6 +26,7 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.11.1",
     "helmet": "^4.6.0",
+    "mailgen": "^2.0.14",
     "mongoose": "^5.12.9",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",

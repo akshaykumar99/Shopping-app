@@ -2,16 +2,25 @@ const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const sendgridTrasport = require('nodemailer-sendgrid-transport');
+// const sendgridTrasport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator');
+const Mailgen = require('mailgen');
 
 const User = require('../models/user');
 
-const transporter = nodemailer.createTransport(sendgridTrasport({
+// const transporter = nodemailer.createTransport(sendgridTrasport({
+// 	auth: {
+// 		api_key: ''
+// 	}
+// }));
+
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
 	auth: {
-		api_key: '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'
+	  user: process.env.EMAIL,
+	  pass: process.env.EPASS
 	}
-}));
+});
 
 exports.getLogin = (req, res, next) => {
 	let message = req.flash('error');
@@ -142,12 +151,30 @@ exports.postSignup = (req, res, next) => {
 		})
 		.then(result => {
 			res.redirect('/login');
-			return transporter.sendMail({
+			// return transporter.sendMail({
+			// 	to: email,
+			// 	from: 'deltacart@gmail.com@gmail.com',
+			// 	subject: 'Signup successfull',
+			// 	html: '<h1>You successfully signed up!</h1>'
+			// });
+			var mailOptions = {
+				from: 'deltacart@test.com',
 				to: email,
-				from: 'akshaychoudharyac01@gmail.com',
 				subject: 'Signup successfull',
-				html: '<h1>You successfully signed up!</h1>'
-			});
+				html: `
+					<b>Welcome to Deltacart Shopping App</b>
+					<hr>
+					<p>You successfully signed up!</p>
+				`
+			  };
+			  
+			return transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+				  console.log(error);
+				} else {
+				  console.log('Email sent: ' + info.response);
+				}
+			  });
 		})
 		.catch(err => {
 			const error = new Error(err);
@@ -196,15 +223,36 @@ exports.postReset = (req, res, next) => {
 			})
 			.then(result => {
 				res.redirect('/');
-				return transporter.sendMail({
+				// return transporter.sendMail({
+				// 	to: req.body.email,
+				// 	from: 'deltacart@gmail.com',
+				// 	subject: 'Password reset',
+				// 	html: `
+				// 		<p>You requested a password reset</p>
+				// 		<p>Click this <a href="http://localhost:3000/reset/${token}>Link</a> to set a new password."></p>
+				// 	`
+				// });
+				// console.log(process.env.APP_URL);
+				var mailOptions = {
+					from: 'deltacart@test.com',
 					to: req.body.email,
-					from: 'akshaychoudharyac01@gmail.com',
 					subject: 'Password reset',
 					html: `
+						<b> Deltacart Shopping App </b>
 						<p>You requested a password reset</p>
-						<p>Click this <a href="http://localhost:3000/reset/${token}</a> to set a new password."></p>
+						<hr>
+						<p>Click this <a href="${process.env.APP_URL}/reset/${token}">Link</a> to set a new password.</p>
 					`
-				});
+				  };
+				  
+				return  transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+					  console.log(error);
+					} else {
+					  console.log('Email sent: ' + info.response);
+					}
+				  });
+				return;
 			})
 			.catch(err => {
 				const error = new Error(err);
@@ -250,23 +298,22 @@ exports.postNewPassword = (req, res, next) => {
 		resetTokenExpiration: { $gt: Date.now() },
 		_id: userId
 	})
-		.then(user => {
-			resetUser = user;
-			return bcrypt.hash(newPassword, 12);
-		})
-		.then(hashedPassword => {
-			resetUser.password = hashedPassword;
-			resetUser.resetToken = undefined;
-			resetUser.resetTokenExpiration = undefined;
-			return resetUser.save();
-		})
-		.then(result => {
-			res.redirect('/login');
-		})
-		.catch(err => {
-			const error = new Error(err);
-			error.httpStatusCode = 500;
-			return next(error);
-		})
-
+	.then(user => {
+		resetUser = user;
+		return bcrypt.hash(newPassword, 12);
+	})
+	.then(hashedPassword => {
+		resetUser.password = hashedPassword;
+		resetUser.resetToken = undefined;
+		resetUser.resetTokenExpiration = undefined;
+		return resetUser.save();
+	})
+	.then(result => {
+		res.redirect('/login');
+	})
+	.catch(err => {
+		const error = new Error(err);
+		error.httpStatusCode = 500;
+		return next(error);
+	})
 };

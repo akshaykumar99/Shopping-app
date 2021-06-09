@@ -3,6 +3,9 @@
         "MONGO_USER": "akshaykumar99",
         "MONGO_PASSWORD": "YSWi8VVKVl5wIUgx",
         "MONGO_DEFAULT_DATABASE": "shop", 
-        "STRIPE_KEY": "sk_test_51Ihr1zSJrJEYTf01HOpfsRZEC6iIB2dmst8zCzsoDzAxWnSO2Mvn39IwN5sazbjhDAC3kfZLZfCeckSAAAGMqwkw00Qk2JWeRj"
+        "STRIPE_KEY": "sk_test_51Ihr1zSJrJEYTf01HOpfsRZEC6iIB2dmst8zCzsoDzAxWnSO2Mvn39IwN5sazbjhDAC3kfZLZfCeckSAAAGMqwkw00Qk2JWeRj",
+        "APP_URL": "http://localhost:3000",
+        "EMAIL": "amitkumarak1315@gmail.com",
+        "EPASS": "itsmeak9901"
     }
 }
