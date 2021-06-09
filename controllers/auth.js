@@ -205,6 +205,7 @@ exports.getReset = (req, res, next) => {
 };
 
 exports.postReset = (req, res, next) => {
+	
 	crypto.randomBytes(32, (err, buffer) => {
 		if (err) {
 			console.log(err);
@@ -287,7 +288,21 @@ exports.getNewPassword = (req, res, next) => {
 exports.postNewPassword = (req, res, next) => {
 	const newPassword = req.body.password;
 	const userId = req.body.userId;
+	const errors = validationResult(req);
 	const passwordToken = req.body.passwordToken;
+	if (!errors.isEmpty()) {
+		return res.status(422).render('auth/new-password', {
+			path: '/new-password',
+			pageTitle: 'New- Password',
+			errorMessage: errors.array()[0].msg,
+			oldInput: { 
+				password: newPassword, 
+			},
+			userId: userId,
+			passwordToken: passwordToken,
+			validationErrors: errors.array()
+		});
+	}
 	let resetUser;
 
 	User.findOne({
